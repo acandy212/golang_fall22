@@ -50,7 +50,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	})
-	http.HandleFunc("/jsonResponse", func(w http.ResponseWriter, r *http.Request){
+	http.HandleFunc("/userInfo", func(w http.ResponseWriter, r *http.Request){
 		json.NewEncoder(w).Encode(jsonResp)
 	})
 	fmt.Println("Listening")
