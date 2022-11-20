@@ -15,17 +15,28 @@ type Welcome struct {
 }
 
 type JsonResponse struct {
-	Value1: string `json:"key1"`
-	Value2: string `json:"key2"`
+	Value1 string `json:"key1"`
+	Value2 string `json:"key2"`
+	JsonNested JsonNested `json:"JsonNested"`
 }
+
+type JsonNested struct{
+	NestedValue1 string `json:"nestedKey1"`
+	NestedValue2 string `json:"nestedKey2"`}
 
 func main() {
 	
 	welcome := Welcome{"Anonymous", time.Now().Format(time.Stamp)}
 	templates := template.Must(template.ParseFiles("templates/welcome-template.html"))
+	
+	nested := JsonNested{
+		NestedValue1: " first nested value",
+		NestedValue2: "second nested value",
+	}
 	jsonResp := JsonResponse{
 		Value1: "some Data",
 		Value2: "other Data",
+		JsonNested: nested,
 	}
 
 	http.Handle("/static/", //final url can be anything
@@ -40,7 +51,7 @@ func main() {
 		}
 	})
 	http.HandleFunc("/jsonResponse", func(w http.ResponseWriter, r *http.Request){
-		fet.Fprint(w, "JSON goes here")
+		json.NewEncoder(w).Encode(jsonResp)
 	})
 	fmt.Println("Listening")
 	fmt.Println(http.ListenAndServe(":8080", nil))
