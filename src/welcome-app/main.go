@@ -15,27 +15,27 @@ type Welcome struct {
 }
 
 type JsonResponse struct {
-	Value1 string `json:"key1"`
-	Value2 string `json:"key2"`
-	JsonNested JsonNested `json:"JsonNested"`
+	Value1 string `json:"FirstName"`
+	Value2 string `json:"LastName"`
+	JsonNested JsonNested `json:"User-Information"`
 }
 
 type JsonNested struct{
-	NestedValue1 string `json:"nestedKey1"`
-	NestedValue2 string `json:"nestedKey2"`}
+	AddyValue1 string `json:"Address"`
+	ContactValue2 string `json:"Contact-Information"`}
 
 func main() {
 	
-	welcome := Welcome{"Anonymous", time.Now().Format(time.Stamp)}
+	welcome := Welcome{"New User", time.Now().Format(time.Stamp)}
 	templates := template.Must(template.ParseFiles("templates/welcome-template.html"))
 	
 	nested := JsonNested{
-		NestedValue1: " first nested value",
-		NestedValue2: "second nested value",
+		AddyValue1: "4364 Elk Creek Road Gainesville, GA 30501",
+		ContactValue2: "JohnW1966@hotmail.com, 678-908-1519",
 	}
 	jsonResp := JsonResponse{
-		Value1: "some Data",
-		Value2: "other Data",
+		Value1: "John",
+		Value2: "Williams",
 		JsonNested: nested,
 	}
 
